@@ -981,7 +981,15 @@ and directive state already_consumed = parse
         match mode with
         | "quotations" ->
             Syntax_mode.quotations := toggle;
+<<<<<<< janestreet/merlin-jst:merge-5.2.0minus-37
             token state lexbuf
+||||||| oxcaml/oxcaml:8cb0afc52527bb3d38ecf4277e6929e0c7a6a4b0
+            token lexbuf
+=======
+            let tok = token lexbuf in
+            enqueue_token_from_end_of_lexbuf_window lexbuf SEMISEMI ~len:0;
+            tok
+>>>>>>> oxcaml/oxcaml:eb63e0e41869ede83ad3001e4facdff54383861d
         | _ ->
             directive_error lexbuf ("unknown syntax mode " ^ mode)
               ~already_consumed ~directive:"syntax"

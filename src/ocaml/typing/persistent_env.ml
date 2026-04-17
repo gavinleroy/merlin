@@ -75,11 +75,21 @@ module Persistent_signature = struct
     let unit_name = CU.Name.to_string unit_name in
     match Load_path.find_normalized_with_visibility (unit_name ^ ".cmi") with
     | filename, visibility when allow_hidden ->
+<<<<<<< janestreet/merlin-jst:merge-5.2.0minus-37
       let cmi = Cmi_cache.read filename in
       Some { filename; cmi; visibility}
     | filename, Visible ->
       let cmi = Cmi_cache.read filename in
       Some { filename; cmi; visibility = Visible}
+||||||| oxcaml/oxcaml:8cb0afc52527bb3d38ecf4277e6929e0c7a6a4b0
+      Some { filename; cmi = read_cmi_lazy filename; visibility}
+    | filename, Visible ->
+      Some { filename; cmi = read_cmi_lazy filename; visibility = Visible}
+=======
+      Some { filename; cmi = read_cmi_lazy filename; visibility}
+    | filename, (Visible _ as visibility) ->
+      Some { filename; cmi = read_cmi_lazy filename; visibility}
+>>>>>>> oxcaml/oxcaml:eb63e0e41869ede83ad3001e4facdff54383861d
     | _, Hidden
     | exception Not_found -> None)
 end
@@ -447,11 +457,16 @@ let read_import penv ~check modname cmi =
   let filename = Unit_info.Artifact.filename cmi in
   add_import penv modname;
   let cmi = read_cmi_lazy filename in
-  let pers_sig = { Persistent_signature.filename; cmi; visibility = Visible } in
+  let pers_sig =
+    { Persistent_signature.filename; cmi;
+      visibility = Visible { cmx_guaranteed = false } }
+  in
   acknowledge_import penv ~check modname pers_sig
 
 let check_visibility ~allow_hidden imp =
-  if not allow_hidden && imp.imp_visibility = Load_path.Hidden then raise Not_found
+  match imp.imp_visibility with
+  | Hidden when not allow_hidden -> raise Not_found
+  | Hidden | Visible _ -> ()
 
 let find_import ~allow_hidden penv ~check modname =
   let {imports; _} = penv in
