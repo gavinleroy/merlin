@@ -75,21 +75,11 @@ module Persistent_signature = struct
     let unit_name = CU.Name.to_string unit_name in
     match Load_path.find_normalized_with_visibility (unit_name ^ ".cmi") with
     | filename, visibility when allow_hidden ->
-<<<<<<< janestreet/merlin-jst:merge-5.2.0minus-37
       let cmi = Cmi_cache.read filename in
       Some { filename; cmi; visibility}
     | filename, Visible ->
       let cmi = Cmi_cache.read filename in
-      Some { filename; cmi; visibility = Visible}
-||||||| oxcaml/oxcaml:8cb0afc52527bb3d38ecf4277e6929e0c7a6a4b0
-      Some { filename; cmi = read_cmi_lazy filename; visibility}
-    | filename, Visible ->
-      Some { filename; cmi = read_cmi_lazy filename; visibility = Visible}
-=======
-      Some { filename; cmi = read_cmi_lazy filename; visibility}
-    | filename, (Visible _ as visibility) ->
-      Some { filename; cmi = read_cmi_lazy filename; visibility}
->>>>>>> oxcaml/oxcaml:eb63e0e41869ede83ad3001e4facdff54383861d
+      Some { filename; cmi; visibility}
     | _, Hidden
     | exception Not_found -> None)
 end

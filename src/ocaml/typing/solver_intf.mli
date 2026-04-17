@@ -47,19 +47,9 @@ module type Lattices = sig
 
   val print : 'a obj -> Fmt.formatter -> 'a elt -> unit
 
-<<<<<<< janestreet/merlin-jst:merge-5.2.0minus-37
-  val equal_obj : 'a obj -> 'b obj -> ('a, 'b) Misc_stdlib.eq option
-
-  val compare_obj : 'a obj -> 'b obj -> ('a, 'b) Misc_stdlib.comparison
-||||||| oxcaml/oxcaml:8cb0afc52527bb3d38ecf4277e6929e0c7a6a4b0
-  val equal_obj : 'a obj -> 'b obj -> ('a, 'b) Misc.eq option
-
-  val compare_obj : 'a obj -> 'b obj -> ('a, 'b) Misc.comparison
-=======
   (** Compares two objects. Used for deduplication only; it is sound (but not
       recommended) to return a nonzero value for equal objects. *)
-  val compare_obj : 'a obj -> 'b obj -> ('a, 'b) Misc.comparison
->>>>>>> oxcaml/oxcaml:eb63e0e41869ede83ad3001e4facdff54383861d
+  val compare_obj : 'a obj -> 'b obj -> ('a, 'b) Misc_stdlib.comparison
 
   val print_obj : Fmt.formatter -> 'a obj -> unit
 end
@@ -161,34 +151,8 @@ module type Lattices_mono = sig
   (** Apply morphism on constant *)
   val apply : 'b obj -> ('a, 'b, 'd) morph -> 'a -> 'b
 
-<<<<<<< janestreet/merlin-jst:merge-5.2.0minus-37
-  (** Checks if two morphisms are equal. Used for deduplication only; it is fine
-      (but not recommended) to return [Not_equal] for equal morphisms. *)
-  val equal_morph :
-    'b obj ->
-    ('a0, 'b, 'l0 * 'r0) morph ->
-    ('a1, 'b, 'l1 * 'r1) morph ->
-    ('a0, 'a1) Misc_stdlib.eq option
-
-  (** Compares two morphisms. Should be compatible with [equal_morph]. Used for
-      deduplication only; it is fine (but not recommended) to return a nonzero
-      value for equal morphisms. *)
-||||||| oxcaml/oxcaml:8cb0afc52527bb3d38ecf4277e6929e0c7a6a4b0
-  (** Checks if two morphisms are equal. Used for deduplication only; it is fine
-      (but not recommended) to return [Not_equal] for equal morphisms. *)
-  val equal_morph :
-    'b obj ->
-    ('a0, 'b, 'l0 * 'r0) morph ->
-    ('a1, 'b, 'l1 * 'r1) morph ->
-    ('a0, 'a1) Misc.eq option
-
-  (** Compares two morphisms. Should be compatible with [equal_morph]. Used for
-      deduplication only; it is fine (but not recommended) to return a nonzero
-      value for equal morphisms. *)
-=======
   (** Compares two morphisms. Used for deduplication only; it is fine (but not
       recommended) to return a nonzero value for equal morphisms. *)
->>>>>>> oxcaml/oxcaml:eb63e0e41869ede83ad3001e4facdff54383861d
   val compare_morph :
     'b obj ->
     ('a0, 'b, 'd0) morph ->

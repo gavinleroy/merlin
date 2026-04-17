@@ -225,25 +225,7 @@ let array_kind_of_elt ~elt_sort env loc ty =
       Jkind.Sort.default_for_transl_and_get
         (type_sort ~why:Array_element env loc ty)
   in
-<<<<<<< janestreet/merlin-jst:merge-5.2.0minus-37
   (* let elt_ty_for_error = ty in (* report the un-scraped ty in errors *) *)
-||||||| oxcaml/oxcaml:8cb0afc52527bb3d38ecf4277e6929e0c7a6a4b0
-     this to traverse the type, rather than just the kind, or to add product
-     kinds. *)
-  match s with
-  | Base Value -> Paddr_scannable
-  | Base (Float64 | Float32 | Bits8 | Bits16 | Bits32 | Bits64 | Word |
-          Untagged_immediate | Vec128 | Vec256 | Vec512) as c ->
-    raise (Error (loc, Mixed_product_array (c, elt_ty_for_error)))
-=======
-     this to traverse the type, rather than just the kind, or to add product
-     kinds. *)
-  match s with
-  | Base Scannable -> Paddr_scannable
-  | Base (Float64 | Float32 | Bits8 | Bits16 | Bits32 | Bits64 | Word |
-          Untagged_immediate | Vec128 | Vec256 | Vec512) as c ->
-    raise (Error (loc, Mixed_product_array (c, elt_ty_for_error)))
->>>>>>> oxcaml/oxcaml:eb63e0e41869ede83ad3001e4facdff54383861d
   let classify_product ty _sorts =
     if Ctype.is_always_gc_ignorable env ty then
       Pgcignorableproductarray ()
@@ -270,22 +252,6 @@ let array_kind_of_elt ~elt_sort env loc ty =
     (*= raise (Error (loc, Unsupported_void_in_array)) *)
     Misc.fatal_error "merlin-jst: void kind encountered in array_kind_of_elt"
 
-<<<<<<< janestreet/merlin-jst:merge-5.2.0minus-37
-||||||| oxcaml/oxcaml:8cb0afc52527bb3d38ecf4277e6929e0c7a6a4b0
-and sort_to_ignorable_product_element_kind loc (s : Jkind.Sort.Const.t) =
-  match s with
-  | Base Value -> Pint_ignorable
-  | Base Float64 -> Punboxedfloat_ignorable Unboxed_float64
-  | Base Float32 -> Punboxedfloat_ignorable Unboxed_float32
-  | Base Bits8 -> Punboxedoruntaggedint_ignorable Untagged_int8
-=======
-and sort_to_ignorable_product_element_kind loc (s : Jkind.Sort.Const.t) =
-  match s with
-  | Base Scannable -> Pint_ignorable
-  | Base Float64 -> Punboxedfloat_ignorable Unboxed_float64
-  | Base Float32 -> Punboxedfloat_ignorable Unboxed_float32
-  | Base Bits8 -> Punboxedoruntaggedint_ignorable Untagged_int8
->>>>>>> oxcaml/oxcaml:eb63e0e41869ede83ad3001e4facdff54383861d
 let array_type_kind ~elt_sort ~elt_ty env loc ty =
   match scrape_poly env ty with
   | Tconstr(p, [elt_ty], _) when Path.same p Predef.path_array

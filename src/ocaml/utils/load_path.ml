@@ -302,16 +302,8 @@ end = struct
   let check ~hidden t =
     hidden = t.hidden && Directory_content_cache.check t.path
 
-<<<<<<< janestreet/merlin-jst:merge-5.2.0minus-37
-  let create ~hidden path =
-    let files = Array.to_list (Directory_content_cache.read path)
-||||||| oxcaml/oxcaml:8cb0afc52527bb3d38ecf4277e6929e0c7a6a4b0
-  let create ~hidden path =
-    let files = Array.to_list (readdir_compat path)
-=======
   let create visibility path =
-    let files = Array.to_list (readdir_compat path)
->>>>>>> oxcaml/oxcaml:eb63e0e41869ede83ad3001e4facdff54383861d
+    let files = Array.to_list (Directory_content_cache.read path)
       |> List.map (
         fun basename -> { basename; path = Filename.concat path basename }) in
     { path; files; visibility }
@@ -457,22 +449,6 @@ let get_paths () =
   { visible = List.rev_map visible_dir_to_include !visible_dirs;
     hidden = List.rev_map Dir.path !hidden_dirs }
 
-<<<<<<< janestreet/merlin-jst:merge-5.2.0minus-37
-let get_visible_path_list () = List.rev_map Dir.path !visible_dirs
-let get_hidden_path_list () = List.rev_map Dir.path !hidden_dirs
-
-||||||| oxcaml/oxcaml:8cb0afc52527bb3d38ecf4277e6929e0c7a6a4b0
-let get_visible_path_list () = List.rev_map Dir.path !visible_dirs
-let get_hidden_path_list () = List.rev_map Dir.path !hidden_dirs
-
-let init_manifests () =
-  let manifests_reader = Dune_manifests_reader.create () in
-  let load_manifest ~hidden ~basenames manifest_path =
-=======
-let init_manifests () =
-  let manifests_reader = Dune_manifests_reader.create () in
-  let load_manifest ~hidden ~basenames manifest_path =
->>>>>>> oxcaml/oxcaml:eb63e0e41869ede83ad3001e4facdff54383861d
 (* CR-someday: init_manifests is not currently relevant because Merlin can safely ignore
    the -I-manifest and -H-manifest flags due to current build rules. But at some point,
    this will change, and manifest files will need to be handled properly. This will also

@@ -796,30 +796,14 @@ let wrap_mutation f =
 
 let wrap_printing_env ~reset_names env f =
   let old_env = !printing_env in
-<<<<<<< janestreet/merlin-jst:merge-5.2.0minus-37
-  set_printing_env (Env.update_short_paths env); reset_naming_context ();
-||||||| oxcaml/oxcaml:8cb0afc52527bb3d38ecf4277e6929e0c7a6a4b0
-  set_printing_env env; reset_naming_context ();
-=======
-  set_printing_env env;
+  set_printing_env (Env.update_short_paths env);
   if reset_names then reset_naming_context ();
->>>>>>> oxcaml/oxcaml:eb63e0e41869ede83ad3001e4facdff54383861d
   try_finally f ~always:(fun () -> set_printing_env old_env)
 
-<<<<<<< janestreet/merlin-jst:merge-5.2.0minus-37
 let wrap_printing_env ?error:_ env f =
-  Env.without_cmis (wrap_printing_env env) f
-||||||| oxcaml/oxcaml:8cb0afc52527bb3d38ecf4277e6929e0c7a6a4b0
-let wrap_printing_env ~error env f =
-  if error then Env.without_cmis (wrap_printing_env env) f
-  else wrap_printing_env env f
-=======
-let wrap_printing_env ~error env f =
-  if error then Env.without_cmis (wrap_printing_env ~reset_names:true env) f
-  else wrap_printing_env ~reset_names:true env f
+  Env.without_cmis (wrap_printing_env ~reset_names:true env) f
 and wrap_printing_env_unguarded env f =
   wrap_printing_env ~reset_names:false env f
->>>>>>> oxcaml/oxcaml:eb63e0e41869ede83ad3001e4facdff54383861d
 
 type type_result = Short_paths.type_result =
   | Nth of int
@@ -1584,6 +1568,17 @@ let rec tree_of_modal_typexp mode modal ty =
     | Tquote_eval ty ->
         (* We use [Predef]'s [eval] as the syntax, so we need to quote [ty]. *)
 <<<<<<< janestreet/merlin-jst:merge-5.2.0minus-37
+        (match best_type_path Predef.path_eval with
+        | Nth _ ->
+          failwith "printtyp: unexpected Nth as result of best_type_path for eval"
+        | Path (s, p') ->
+          let ty = newgenty (Tquote ty) in
+          let tyl = apply_subst_opt s [ty] in
+          Internal_names.add p';
+          Otyp_constr (tree_of_path (Some Type) p', tree_of_typlist mode tyl))
+    | Tnil | Tfield _ ->
+        tree_of_typobject mode ty None
+    | Tsubst _ ->
 ||||||| oxcaml/oxcaml:8cb0afc52527bb3d38ecf4277e6929e0c7a6a4b0
         let ty = newgenty (Tquote ty) in
         let p', s = best_type_path Predef.path_eval in
@@ -1608,17 +1603,6 @@ let rec tree_of_modal_typexp mode modal ty =
         tree_of_typobject mode ty None
     | Tsubst _ ->
 >>>>>>> oxcaml/oxcaml:eb63e0e41869ede83ad3001e4facdff54383861d
-        (match best_type_path Predef.path_eval with
-        | Nth _ ->
-          failwith "printtyp: unexpected Nth as result of best_type_path for eval"
-        | Path (s, p') ->
-          let ty = newgenty (Tquote ty) in
-          let tyl = apply_subst_opt s [ty] in
-          Internal_names.add p';
-          Otyp_constr (tree_of_path (Some Type) p', tree_of_typlist mode tyl))
-    | Tnil | Tfield _ ->
-        tree_of_typobject mode ty None
-    | Tsubst _ ->
         (* This case should only happen when debugging the compiler *)
         Otyp_stuff "<Tsubst>"
     | Tlink _ ->

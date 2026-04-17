@@ -1371,30 +1371,13 @@ let parameters () = Persistent_env.parameters !persistent_env
 let read_pers_mod modname cmi =
   Persistent_env.read !persistent_env modname cmi
 
-<<<<<<< janestreet/merlin-jst:merge-5.2.0minus-37
-let find_pers_mod name ~allow_excess_args =
-  Persistent_env.find !persistent_env
+let find_pers_mod name ~allow_hidden ~allow_excess_args =
+  Persistent_env.find ~allow_hidden !persistent_env
     read_sign_of_cmi short_paths_components name ~allow_excess_args
-||||||| oxcaml/oxcaml:8cb0afc52527bb3d38ecf4277e6929e0c7a6a4b0
-let find_pers_mod name ~allow_excess_args =
-  Persistent_env.find !persistent_env read_sign_of_cmi name ~allow_excess_args
-=======
-let find_pers_mod ~allow_hidden name ~allow_excess_args =
-  Persistent_env.find ~allow_hidden !persistent_env read_sign_of_cmi name
-    ~allow_excess_args
->>>>>>> oxcaml/oxcaml:eb63e0e41869ede83ad3001e4facdff54383861d
 
-<<<<<<< janestreet/merlin-jst:merge-5.2.0minus-37
-let check_pers_mod ~loc name =
-  Persistent_env.check !persistent_env
-    read_sign_of_cmi short_paths_components ~loc name
-||||||| oxcaml/oxcaml:8cb0afc52527bb3d38ecf4277e6929e0c7a6a4b0
-let check_pers_mod ~loc name =
-  Persistent_env.check !persistent_env read_sign_of_cmi ~loc name
-=======
 let check_pers_mod ~allow_hidden ~loc name =
-  Persistent_env.check ~allow_hidden !persistent_env read_sign_of_cmi ~loc name
->>>>>>> oxcaml/oxcaml:eb63e0e41869ede83ad3001e4facdff54383861d
+  Persistent_env.check ~allow_hidden !persistent_env
+    read_sign_of_cmi short_paths_components ~loc name
 
 let crc_of_unit name =
   Persistent_env.crc_of_unit !persistent_env name

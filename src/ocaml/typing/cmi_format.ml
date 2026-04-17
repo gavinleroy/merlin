@@ -132,12 +132,6 @@ let serialize oc base =
     |> marshal
   in
   let map_type_expr _ ty = Subst.Lazy.force_type_expr ty |> marshal in
-<<<<<<< janestreet/merlin-jst:merge-5.2.0minus-37
-  Serialize.signature {map_signature; map_type_expr}
-*)
-||||||| oxcaml/oxcaml:8cb0afc52527bb3d38ecf4277e6929e0c7a6a4b0
-  Serialize.signature {map_signature; map_type_expr}
-=======
   let map_value_description _ (vd : Subst.Lazy.value_description) =
     (* [val_type] and [val_lpoly] are marshalled in one-go to preserve physical
        identity of sort variables. The result is stored in [val_type], and
@@ -156,7 +150,7 @@ let serialize oc base =
     }
   in
   Serialize.signature {map_signature; map_type_expr; map_value_description}
->>>>>>> oxcaml/oxcaml:eb63e0e41869ede83ad3001e4facdff54383861d
+*)
 
 let input_cmi_lazy ic =
   let read_bytes n =

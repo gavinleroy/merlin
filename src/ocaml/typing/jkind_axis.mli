@@ -16,15 +16,9 @@
 module type Axis_ops = sig
   include Mode_intf.Lattice
 
-<<<<<<< janestreet/merlin-jst:merge-5.2.0minus-37
-  val less_or_equal : t -> t -> Misc_stdlib.Le_result.t
-||||||| oxcaml/oxcaml:8cb0afc52527bb3d38ecf4277e6929e0c7a6a4b0
-  val less_or_equal : t -> t -> Misc.Le_result.t
-=======
   val to_string : t -> string
 
-  val less_or_equal : t -> t -> Misc.Le_result.t
->>>>>>> oxcaml/oxcaml:eb63e0e41869ede83ad3001e4facdff54383861d
+  val less_or_equal : t -> t -> Misc_stdlib.Le_result.t
 
   val equal : t -> t -> bool
 end
