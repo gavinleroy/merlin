@@ -171,22 +171,6 @@ let get_mod_bound_doc mod_bound =
          the OCaml heap"
     | Axis_pair (Nonmodal Externality, External) ->
       Some "Values of types of this kind are never pointers to the OCaml heap"
-    | Axis_pair (Nonmodal Nullability, Maybe_null) ->
-      Some
-        "Values of types of this kind might be the bit pattern containing all \
-         0s"
-    | Axis_pair (Nonmodal Nullability, Non_null) ->
-      Some
-        "Values of types of this kind that are also a subkind of `value` are \
-         never the bit pattern containing all 0s"
-    | Axis_pair (Nonmodal Separability, Non_float) ->
-      Some "Values of types of this kind are never pointers to floats."
-    | Axis_pair (Nonmodal Separability, Separable) ->
-      Some
-        "No type of this kind includes both pointers to a float and other \
-         values."
-    | Axis_pair (Nonmodal Separability, Maybe_separable) ->
-      Some "Types of this kind may mix pointers to floats with other values."
     | Everything ->
       Some
         "Synonym for \"global aliased many contended portable unyielding \
@@ -217,8 +201,16 @@ let get_mode_doc (Atom (axis, mode) : Mode.Alloc.atom) =
       Some
         "The mutable parts of values with this mode can be read, but not \
          written (unless they are atomic)"
+    | Monadic Contention, Corrupted ->
+      Some
+        "The mutable parts of values with this mode can be written, but not \
+         read (unless they are atomic)"
     | Monadic Contention, Uncontended ->
       Some "The mutable parts of values with this mode can be fully accessed"
+    | Comonadic Portability, Corruptible ->
+      Some
+        "Values with this mode can be written to (but not read from) by other \
+         threads without causing data races"
     | Comonadic Portability, Nonportable ->
       Some
         "Values with this mode cannot be sent to or shared with other threads, \
