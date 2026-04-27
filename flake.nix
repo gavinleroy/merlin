@@ -2,7 +2,7 @@
   description = "Merlin Nix Flake";
 
   inputs.flake-utils.url = "github:numtide/flake-utils";
-  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+  inputs.nixpkgs.url = "github:nixos/nixpkgs/626a1db9776eb9db61b1e1f394d928505162cf69";
   inputs.menhir-repository = {
     url = "gitlab:fpottier/menhir/20231231?host=gitlab.inria.fr";
     flake = false;
@@ -20,8 +20,8 @@
       let
         pkgs = nixpkgs.legacyPackages."${system}";
 
-        # Build with OCaml 5.2
-        ocamlPackages = pkgs.ocaml-ng.ocamlPackages_5_2.overrideScope (
+        # Build with OCaml 5.4
+        ocamlPackages = pkgs.ocaml-ng.ocamlPackages_5_4.overrideScope (
           _: osuper: {
             # Override menhirLib to the pinned version
             menhirLib = osuper.menhirLib.overrideAttrs (_: {
