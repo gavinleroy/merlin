@@ -2,6 +2,7 @@
   description = "Merlin Nix Flake";
 
   inputs.flake-utils.url = "github:numtide/flake-utils";
+  # Tip of nixos-24.11 as of 2026-02-14, chosen as the last revision before `menhir` added a `menhirGLR` package.
   inputs.nixpkgs.url = "github:nixos/nixpkgs/626a1db9776eb9db61b1e1f394d928505162cf69";
   inputs.menhir-repository = {
     url = "gitlab:fpottier/menhir/20231231?host=gitlab.inria.fr";
